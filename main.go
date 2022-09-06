@@ -49,6 +49,11 @@ func main() {
 		}
 	}
 
+	if err := scan.Err(); err != nil {
+		fmt.Fprintf(os.Stderr, "Read error: %s", err)
+		os.Exit(1)
+	}
+
 	// Sort the reservoir to ensure output is ordered like the input.
 	sort.Slice(lines, func(i, j int) bool {
 		return lines[i].num < lines[j].num
