@@ -37,17 +37,15 @@ func main() {
 	lines := make([]line, 0, *flagK)
 	for i := 0; i < *flagK; i++ {
 		if scan.Scan() {
-			lines = append(lines, line{i, scan.Bytes()})
+			lines = append(lines, line{i, dup(scan.Bytes())})
 		}
 	}
 
 	// Randomly replace items in the reservoir with the remaining lines.
-	seen := *flagK
-	for scan.Scan() {
-		seen++
-		index := r.Intn(seen)
+	for count := len(lines); scan.Scan(); count++ {
+		index := r.Intn(count)
 		if index < len(lines) {
-			lines[index] = line{seen, scan.Bytes()}
+			lines[index] = line{count, dup(scan.Bytes())}
 		}
 	}
 
@@ -97,4 +95,10 @@ func splitNulls(data []byte, atEOF bool) (int, []byte, error) {
 		return len(data), data, nil
 	}
 	return 0, nil, nil
+}
+
+func dup(b []byte) []byte {
+	ret := make([]byte, len(b))
+	copy(ret, b)
+	return ret
 }
