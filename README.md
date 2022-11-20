@@ -8,7 +8,7 @@ It emits items in the same order as they were found on input. It reads the
 entire input before it can return anything, so ensure you feed it with a
 stream that ends.
 
-To install: `go get github.com/pteichman/samp@latest`
+To install: `go install github.com/pteichman/samp@latest`
 
 ```
 Usage of samp:
